@@ -4,4 +4,4 @@ interface FooterProps  {
   fullName: string;
   studentId: string | number;
 };
-export type { FooterProps  };
+export type { FooterProps };
