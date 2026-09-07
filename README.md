@@ -1,3 +1,6 @@
+ชื่อ-สกุล : ศุภัชโชค พิมสาน
+รหัส นศ.: 680610724
+
 # lecture13 : React 2 — Route · Layout · useState(hook) · useEffect(hook) · localStorage
 
 ---

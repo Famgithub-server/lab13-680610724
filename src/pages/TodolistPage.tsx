@@ -4,6 +4,7 @@ import { type TaskCardProps } from "../libs/Todolist";
 import TodoModal from "../components/Modal";
 
 const STORAGE_KEY = "lecture13.tasks";
+const defaultTasks: TaskCardProps[] = [];
 
 function loadTasks(): TaskCardProps[] {
     try {
@@ -16,27 +17,6 @@ function loadTasks(): TaskCardProps[] {
 
 
 // ข้อมูลตั้งต้น
-const defaultTasks: TaskCardProps[] = [
-    {
-        id: "1",
-        title: "Read a book",
-        description: "Vite + React + TS",
-        isDone: false,
-    },
-    {
-        id: "2",
-        title: "Write code",
-        description: "Finish project",
-        isDone: false,
-    },
-    {
-        id: "3",
-        title: "Deploy app",
-        description: "Push to Vercel",
-        isDone: false,
-    },
-];
-
 export default function TodolistPage() {
     // tasks = ค่าปัจจุบัน , setTasks = ฟังก์ชันสั่งเปลี่ยนค่า
     const [tasks, setTasks] = useState<TaskCardProps[]>(loadTasks);
@@ -57,9 +37,25 @@ export default function TodolistPage() {
             tasks.map((t) => (t.id === taskId ? { ...t, isDone: !t.isDone } : t)),
         );
 
+    const count = tasks.filter((t) => t.isDone).length;
+
     return (
         <div className="container text-center">
-            <h2>Todo List</h2>
+            <h2 className="mt-3">Todo List</h2>
+            <div className="card shadow-sm p-3 mb-5 mx-auto" style={{ maxWidth: "365px" }}>
+                <div className="d-flex justify-content-between text-muted small fw-semibold mb-1">
+                    <span>Total: {tasks.length}</span>
+                    <span className="text-success">Done: {count}</span>
+                </div>
+                <div className="progress" style={{ height: "6px" }}>
+                    <div
+                        className="progress-bar bg-success"
+                        role="progressbar"
+                        style={{
+                            width: `${tasks.length > 0 ? (count / tasks.length) * 100 : 0}%`,
+                        }}
+                    />
+                </div>
             <button
                 className="btn btn-primary my-3"
                 data-bs-toggle="modal"
@@ -67,6 +63,7 @@ export default function TodolistPage() {
             >
                 Add
             </button>
+            </div>
             <TodoModal onAdd={handleAdd} />
             {tasks.map((task) => (
                 <TaskCard
